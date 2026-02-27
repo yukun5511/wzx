@@ -101,6 +101,49 @@ Page({
     wx.navigateTo({ url: '/pages/teacher/teacher' })
   },
 
+  switchToTeacherWorkbench() {
+    const user = { ...(getApp().globalData.user || this.data.user || {}) }
+    if (user.role !== 'admin') {
+      wx.showToast({ icon: 'none', title: '仅管理员可操作' })
+      return
+    }
+
+    user.activeRole = 'teacher'
+    wx.setStorageSync('activeRole', 'teacher')
+    getApp().globalData.user = user
+
+    this.setData({
+      user,
+      activeRole: 'teacher',
+      isTeacher: true,
+      isAdmin: false
+    })
+
+    wx.navigateTo({ url: '/pages/teacher/teacher' })
+  },
+
+  switchToAdminManage() {
+    const user = { ...(getApp().globalData.user || this.data.user || {}) }
+    if (user.role !== 'admin') {
+      wx.showToast({ icon: 'none', title: '仅管理员可操作' })
+      return
+    }
+
+    user.activeRole = 'admin'
+    wx.setStorageSync('activeRole', 'admin')
+    getApp().globalData.user = user
+
+    this.setData({
+      user,
+      activeRole: 'admin',
+      isTeacher: true,
+      isAdmin: true
+    })
+
+    this.loadPendingTeacherApplications()
+    wx.showToast({ title: '已切回管理员' })
+  },
+
   goSignIn() {
     wx.navigateTo({ url: '/pages/signin/signin' })
   }

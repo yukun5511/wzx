@@ -20,7 +20,7 @@
   <view class="hero">
     <view class="hero-title">课程管理助手</view>
     <view class="hero-desc">面向学生与教师的课程信息、签到、作业与积分一体化管理</view>
-    <view class="meta" wx:if="{{showPhoneAuthPopup}}" style="color:#e8f0ff; margin-top:10rpx;">请先完成手机号绑定以识别角色权限</view>
+    <view class="meta hero-note" wx:if="{{showPhoneAuthPopup}}">请先完成手机号绑定以识别角色权限</view>
   </view>
 
   <view class="card card-pressable" wx:for="{{menus}}" wx:key="path" bindtap="go" data-path="{{item.path}}">

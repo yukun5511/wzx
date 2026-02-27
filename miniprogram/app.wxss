@@ -1,12 +1,13 @@
 :root {
-  --fs-bg: #f2f4f7;
+  --fs-bg: #f5f7fa;
   --fs-surface: #ffffff;
-  --fs-text: #1f2329;
-  --fs-subtext: #646a73;
-  --fs-primary: #4e83ff;
-  --fs-primary-weak: #edf3ff;
-  --fs-border: #e5e6eb;
-  --fs-success: #00b578;
+  --fs-text: #1f2937;
+  --fs-subtext: #667085;
+  --fs-primary: #1677ff;
+  --fs-primary-weak: #e8f3ff;
+  --fs-border: #dfe3e8;
+  --fs-success: #16a34a;
+  --fs-shadow: 0 4rpx 20rpx rgba(15, 23, 42, 0.06);
 }
 
 page {
@@ -20,31 +21,37 @@ page {
 }
 
 .hero {
-  background: linear-gradient(135deg, #5c90ff 0%, #85afff 100%);
-  border-radius: 24rpx;
-  padding: 28rpx;
-  color: #fff;
+  background: var(--fs-surface);
+  border-radius: 14rpx;
+  padding: 26rpx;
+  color: var(--fs-text);
+  border: 1rpx solid var(--fs-border);
+  box-shadow: var(--fs-shadow);
+  border-left: 8rpx solid var(--fs-primary);
   margin-bottom: 20rpx;
 }
 
 .hero-title {
-  font-size: 36rpx;
+  font-size: 34rpx;
   font-weight: 600;
   margin-bottom: 10rpx;
+  color: var(--fs-text);
 }
 
 .hero-desc {
   font-size: 24rpx;
-  opacity: 0.95;
+  color: var(--fs-subtext);
+  line-height: 1.6;
 }
 
 .card {
   background: var(--fs-surface);
-  border-radius: 20rpx;
+  border-radius: 14rpx;
   padding: 24rpx;
   margin-bottom: 20rpx;
   border: 1rpx solid var(--fs-border);
   box-sizing: border-box;
+  box-shadow: var(--fs-shadow);
 }
 
 .card-pressable {
@@ -52,14 +59,14 @@ page {
 }
 
 .title {
-  font-size: 34rpx;
+  font-size: 32rpx;
   font-weight: 600;
-  margin-bottom: 14rpx;
+  margin-bottom: 12rpx;
   color: var(--fs-text);
 }
 
 .sub-title {
-  font-size: 30rpx;
+  font-size: 28rpx;
   font-weight: 500;
   color: var(--fs-text);
   margin-bottom: 8rpx;
@@ -73,28 +80,34 @@ page {
 
 .tag {
   display: inline-block;
-  padding: 4rpx 14rpx;
-  border-radius: 999rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
   background: var(--fs-primary-weak);
   color: var(--fs-primary);
   font-size: 22rpx;
   margin-bottom: 12rpx;
+  border: 1rpx solid #cfe4ff;
 }
 
 .btn-primary {
   margin-top: 24rpx;
   background: var(--fs-primary);
   color: #fff;
-  border-radius: 14rpx;
+  border-radius: 10rpx;
   border: none;
   font-size: 28rpx;
+  height: 82rpx;
+  line-height: 82rpx;
+  font-weight: 500;
 }
 
 button {
-  border-radius: 14rpx;
+  border-radius: 10rpx;
   border: 1rpx solid var(--fs-border);
   background: #fff;
   color: var(--fs-text);
+  height: 76rpx;
+  line-height: 76rpx;
 }
 
 input,
@@ -184,8 +197,13 @@ textarea {
 .role-switch-trigger {
   background: var(--fs-primary-weak);
   color: var(--fs-primary);
-  border: 1rpx solid #d6e4ff;
-  border-radius: 999rpx;
+  border: 1rpx solid #cfe4ff;
+  border-radius: 8rpx;
   padding: 8rpx 18rpx;
   font-size: 24rpx;
+}
+
+.hero-note {
+  margin-top: 10rpx;
+  color: var(--fs-subtext);
 }

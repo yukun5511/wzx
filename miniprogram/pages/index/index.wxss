@@ -6,7 +6,7 @@ page { background: #f6f7fb; }
 	top: 0;
 	right: 0;
 	bottom: 0;
-	background: rgba(15, 20, 31, 0.5);
+	background: rgba(15, 23, 42, 0.52);
 	z-index: 99;
 	display: flex;
 	align-items: center;
@@ -19,9 +19,9 @@ page { background: #f6f7fb; }
 	width: 100%;
 	max-width: 660rpx;
 	background: #fff;
-	border-radius: 20rpx;
+	border-radius: 14rpx;
 	overflow: hidden;
-	border: 1rpx solid #e5e6eb;
+	border: 1rpx solid #dfe3e8;
 	max-height: 82vh;
 	display: flex;
 	flex-direction: column;
@@ -29,7 +29,7 @@ page { background: #f6f7fb; }
 
 .auth-head {
 	padding: 30rpx 28rpx 18rpx;
-	background: #f7f9fd;
+	background: #f8fafc;
 }
 
 .auth-title {
@@ -85,7 +85,7 @@ page { background: #f6f7fb; }
 	line-height: 84rpx;
 	font-size: 30rpx;
 	font-weight: 600;
-	background: #4e83ff !important;
+	background: #1677ff !important;
 	color: #fff !important;
 	border: none !important;
 }
