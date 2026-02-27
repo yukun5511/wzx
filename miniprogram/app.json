@@ -3,8 +3,9 @@
     "pages/index/index",
     "pages/course/course",
     "pages/assignments/assignments",
-    "pages/signin/signin",
+    "pages/manage/manage",
     "pages/mine/mine",
+    "pages/signin/signin",
     "pages/trip/trip",
     "pages/materials/materials",
     "pages/credits/credits",
@@ -35,8 +36,8 @@
         "text": "作业"
       },
       {
-        "pagePath": "pages/signin/signin",
-        "text": "签到"
+        "pagePath": "pages/manage/manage",
+        "text": "管理"
       },
       {
         "pagePath": "pages/mine/mine",

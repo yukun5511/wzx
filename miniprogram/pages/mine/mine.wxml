@@ -1,12 +1,12 @@
 <view class="container">
-  <view class="card" wx:if="{{isAdmin && !needPhoneAuth}}">
+  <view class="card" wx:if="{{canSwitchRole && !needPhoneAuth}}">
     <view class="role-switch-bar">
       <view class="sub-title mb-0">身份切换</view>
       <view class="role-switch-trigger" bindtap="openRoleSwitcher">当前：{{activeRoleText}}</view>
     </view>
   </view>
 
-  <view class="card" wx:if="{{!isAdmin || needPhoneAuth}}">
+  <view class="card" wx:if="{{!canSwitchRole || needPhoneAuth}}">
     <view class="meta">左上角身份切换功能仅管理员可用（需先完成手机号绑定并命中管理员手机号）。</view>
   </view>
 
@@ -26,27 +26,9 @@
     <view class="meta">OpenID：{{user.openid || '-'}}</view>
   </view>
 
-  <view class="card" wx:if="{{activeRole==='student' && !needPhoneAuth}}">
-    <view class="title">申请成为老师</view>
-    <view class="desc">先以学生身份使用，提交申请后由管理员审批。</view>
-    <textarea class="mt-12" placeholder="申请理由（选填）" value="{{applyReason}}" bindinput="onReasonInput" />
-    <button class="btn-primary" bindtap="submitTeacherApplication">提交老师申请</button>
-    <view class="meta" wx:if="{{myTeacherApplication}}">当前状态：{{myTeacherApplication.status}}</view>
-  </view>
-
-  <view class="card" wx:if="{{activeRole==='admin'}}">
-    <view class="title">老师申请审批</view>
-    <view class="desc" wx:if="{{!pendingTeacherApplications.length}}">暂无待审批申请</view>
-    <view wx:for="{{pendingTeacherApplications}}" wx:key="_id" class="list-item">
-      <view>申请人：{{item.applicantOpenid}}</view>
-      <view class="meta">手机号：{{item.applicantPhone || '-'}}</view>
-      <view class="meta">理由：{{item.reason || '无'}}</view>
-      <view class="meta">时间：{{item.createdAt}}</view>
-      <view class="row mt-12">
-        <button size="mini" class="btn-primary" data-id="{{item._id}}" data-pass="{{true}}" bindtap="reviewTeacherApplication">通过</button>
-        <button size="mini" data-id="{{item._id}}" data-pass="{{false}}" bindtap="reviewTeacherApplication">拒绝</button>
-      </view>
-    </view>
+  <view class="card">
+    <view class="title">管理入口说明</view>
+    <view class="desc">老师申请、管理员审批、老师工作台入口已统一迁移到底部“管理”菜单。</view>
   </view>
 
   <view class="card card-pressable" bindtap="go" data-url="/pages/trip/trip">

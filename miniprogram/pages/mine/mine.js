@@ -7,12 +7,10 @@ Page({
     user: {},
     isTeacher: false,
     isAdmin: false,
+    canSwitchRole: false,
     activeRole: 'student',
     needPhoneAuth: false,
     manualPhone: '',
-    applyReason: '',
-    myTeacherApplication: null,
-    pendingTeacherApplications: [],
     roleOptions: ['student', 'teacher', 'admin'],
     roleLabels: {
       student: '学生',
@@ -27,12 +25,6 @@ Page({
     const gate = await ensurePhoneBound()
     if (!gate.ok) return
     await this.refreshUser()
-    await this.loadMyTeacherApplication()
-    if (this.data.isAdmin) {
-      await this.loadPendingTeacherApplications()
-    } else {
-      this.setData({ pendingTeacherApplications: [] })
-    }
   },
 
   async refreshUser() {
@@ -54,6 +46,7 @@ Page({
       user,
       isTeacher: isTeacher(user),
       isAdmin: currentRole === 'admin',
+      canSwitchRole: user.role === 'admin',
       activeRole: currentRole,
       needPhoneAuth: !user.phoneBound,
       roleIndex: roleIndex >= 0 ? roleIndex : 0,
@@ -77,18 +70,13 @@ Page({
       activeRoleText: this.data.roleLabels[activeRole] || '学生',
       isTeacher: isTeacher(user),
       isAdmin: activeRole === 'admin',
+      canSwitchRole: user.role === 'admin',
       activeRole
     })
-
-    if (activeRole === 'admin') {
-      this.loadPendingTeacherApplications()
-    } else {
-      this.setData({ pendingTeacherApplications: [] })
-    }
   },
 
   openRoleSwitcher() {
-    if (!this.data.isAdmin || this.data.needPhoneAuth) {
+    if (!this.data.canSwitchRole || this.data.needPhoneAuth) {
       wx.showToast({ icon: 'none', title: '仅管理员可切换' })
       return
     }
@@ -143,6 +131,7 @@ Page({
       user,
       isTeacher: isTeacher(user),
       isAdmin: user.activeRole === 'admin',
+      canSwitchRole: user.role === 'admin',
       activeRole: user.activeRole,
       needPhoneAuth: !user.phoneBound,
       manualPhone: '',
@@ -150,60 +139,6 @@ Page({
       activeRoleText: this.data.roleLabels[user.activeRole] || '学生'
     })
     wx.showToast({ title: '绑定成功' })
-    await this.loadMyTeacherApplication()
-    if (user.role === 'admin') {
-      await this.loadPendingTeacherApplications()
-    }
-  },
-
-  onReasonInput(e) {
-    this.setData({ applyReason: e.detail.value })
-  },
-
-  async submitTeacherApplication() {
-    if (this.data.needPhoneAuth) {
-      wx.showToast({ icon: 'none', title: '请先授权手机号' })
-      return
-    }
-    const res = await callApi('submitTeacherApplication', {
-      reason: this.data.applyReason
-    })
-    if (!res.success) {
-      wx.showToast({ icon: 'none', title: res.message || '提交失败' })
-      return
-    }
-    wx.showToast({ title: '申请已提交' })
-    this.setData({ applyReason: '' })
-    await this.loadMyTeacherApplication()
-  },
-
-  async loadMyTeacherApplication() {
-    const res = await callApi('getMyTeacherApplication')
-    if (res.success) {
-      this.setData({ myTeacherApplication: res.data || null })
-    }
-  },
-
-  async loadPendingTeacherApplications() {
-    const res = await callApi('listTeacherApplications')
-    if (res.success) {
-      this.setData({ pendingTeacherApplications: res.data || [] })
-    }
-  },
-
-  async reviewTeacherApplication(e) {
-    const { id, pass } = e.currentTarget.dataset
-    const res = await callApi('reviewTeacherApplication', {
-      applicationId: id,
-      pass: !!pass,
-      remark: ''
-    })
-    if (!res.success) {
-      wx.showToast({ icon: 'none', title: res.message || '处理失败' })
-      return
-    }
-    wx.showToast({ title: pass ? '已通过' : '已拒绝' })
-    await this.loadPendingTeacherApplications()
   },
 
   go(e) {

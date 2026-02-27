@@ -1,0 +1,31 @@
+<view class="container">
+  <view class="card" wx:if="{{activeRole==='student'}}">
+    <view class="title">老师申请</view>
+    <view class="desc">提交后由管理员审批，通过后可使用老师工作台。</view>
+    <textarea class="mt-12" placeholder="申请理由（选填）" value="{{applyReason}}" bindinput="onReasonInput" />
+    <button class="btn-primary" bindtap="submitTeacherApplication">提交申请</button>
+    <view class="meta" wx:if="{{myTeacherApplication}}">当前状态：{{myTeacherApplication.status}}</view>
+  </view>
+
+  <view class="card" wx:if="{{activeRole==='teacher' || activeRole==='admin'}}">
+    <view class="title">老师工作台</view>
+    <view class="desc">管理课程内容、发布作业、批改提交记录。</view>
+    <button class="btn-primary" bindtap="goTeacherWorkbench">进入工作台</button>
+    <button class="mt-12" bindtap="goSignIn">现场签到入口</button>
+  </view>
+
+  <view class="card" wx:if="{{activeRole==='admin'}}">
+    <view class="title">审批列表</view>
+    <view class="desc" wx:if="{{!pendingTeacherApplications.length}}">暂无待审批申请</view>
+    <view wx:for="{{pendingTeacherApplications}}" wx:key="_id" class="list-item">
+      <view>申请人：{{item.applicantOpenid}}</view>
+      <view class="meta">手机号：{{item.applicantPhone || '-'}}</view>
+      <view class="meta">理由：{{item.reason || '无'}}</view>
+      <view class="meta">时间：{{item.createdAt}}</view>
+      <view class="row mt-12">
+        <button size="mini" class="btn-primary" data-id="{{item._id}}" data-pass="{{true}}" bindtap="reviewTeacherApplication">通过</button>
+        <button size="mini" data-id="{{item._id}}" data-pass="{{false}}" bindtap="reviewTeacherApplication">拒绝</button>
+      </view>
+    </view>
+  </view>
+</view>
