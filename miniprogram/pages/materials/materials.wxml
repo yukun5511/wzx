@@ -1,0 +1,15 @@
+<view class="container">
+  <view class="card">
+    <button bindtap="uploadWord">上传 Word 文档</button>
+    <view style="margin-top: 16rpx; color: #666;">仅支持 .doc/.docx，上传后自动入库存储。</view>
+  </view>
+
+  <view class="card">
+    <view class="title">文档列表</view>
+    <view wx:if="{{!list.length}}">暂无文档</view>
+    <view wx:for="{{list}}" wx:key="_id" style="margin-bottom: 16rpx;">
+      <view>{{item.fileName}}</view>
+      <view style="color:#666; font-size:24rpx;">上传时间：{{item.createdAt}}</view>
+    </view>
+  </view>
+</view>

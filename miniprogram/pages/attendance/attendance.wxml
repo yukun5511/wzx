@@ -1,0 +1,12 @@
+<view class="container">
+  <view class="card">
+    <view class="title">我的出勤记录</view>
+    <view wx:if="{{!records.length}}">暂无记录</view>
+    <view wx:for="{{records}}" wx:key="_id" style="margin-bottom: 16rpx;">
+      <view>课程：{{item.courseName || '课程活动'}}</view>
+      <view>签到方式：{{item.method}}</view>
+      <view style="color: #666; font-size: 24rpx;">时间：{{item.createdAt}}</view>
+      <view style="color: #666; font-size: 24rpx;" wx:if="{{item.address}}">地点：{{item.address}}</view>
+    </view>
+  </view>
+</view>

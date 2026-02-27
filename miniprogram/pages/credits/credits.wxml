@@ -1,0 +1,10 @@
+<view class="container">
+  <view class="card">
+    <view class="title">累计积分</view>
+    <view style="font-size: 60rpx; font-weight: 700; color: #07c160;">{{credits.points}}</view>
+  </view>
+  <view class="card">
+    <view class="title">累计学分</view>
+    <view style="font-size: 60rpx; font-weight: 700; color: #2a62ff;">{{credits.credits}}</view>
+  </view>
+</view>

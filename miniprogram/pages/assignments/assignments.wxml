@@ -1,0 +1,14 @@
+<view class="container">
+  <view class="card" wx:for="{{list}}" wx:key="_id">
+    <view class="title">{{item.title}}</view>
+    <view class="desc">{{item.content}}</view>
+    <view class="meta">截止：{{item.deadline || '未设置'}}</view>
+    <view class="meta meta-primary">我的状态：{{item.mySubmission.status || '未提交'}}</view>
+    <view wx:if="{{item.mySubmission.score !== undefined}}" class="meta meta-success">成绩：{{item.mySubmission.score}}</view>
+    <view wx:if="{{item.mySubmission.comment}}" class="meta">评语：{{item.mySubmission.comment}}</view>
+    <button class="btn-primary" bindtap="submitWork" data-id="{{item._id}}">上传作业</button>
+  </view>
+  <view class="card" wx:if="{{!list.length}}">
+    <view class="desc">暂无作业</view>
+  </view>
+</view>

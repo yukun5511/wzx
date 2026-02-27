@@ -1,0 +1,15 @@
+<view class="container">
+  <view class="card">
+    <view class="tag">方式一</view>
+    <view class="title">位置签到</view>
+    <view class="desc">到达课程现场后使用定位快速签到</view>
+    <button class="btn-primary" bindtap="signByLocation">获取定位并签到</button>
+  </view>
+
+  <view class="card">
+    <view class="tag">方式二</view>
+    <view class="title">扫码/口令签到</view>
+    <input value="{{qrCode}}" bindinput="onCodeInput" placeholder="输入签到码或扫码结果" />
+    <button class="btn-primary" bindtap="signByCode">提交签到</button>
+  </view>
+</view>

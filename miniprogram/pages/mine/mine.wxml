@@ -1,0 +1,72 @@
+<view class="container">
+  <view class="card" wx:if="{{isAdmin && !needPhoneAuth}}">
+    <view class="role-switch-bar">
+      <view class="sub-title mb-0">身份切换</view>
+      <view class="role-switch-trigger" bindtap="openRoleSwitcher">当前：{{activeRoleText}}</view>
+    </view>
+  </view>
+
+  <view class="card" wx:if="{{!isAdmin || needPhoneAuth}}">
+    <view class="meta">左上角身份切换功能仅管理员可用（需先完成手机号绑定并命中管理员手机号）。</view>
+  </view>
+
+  <view class="card" wx:if="{{needPhoneAuth}}">
+    <view class="title">首次登录认证</view>
+    <view class="desc">请先输入手机号完成绑定，系统将按手机号识别是否管理员。</view>
+    <input class="mt-12" type="number" maxlength="11" placeholder="请输入11位手机号" value="{{manualPhone}}" bindinput="onManualPhoneInput" />
+    <button class="btn-primary" bindtap="onManualBindPhone">绑定手机号</button>
+  </view>
+
+  <view class="card">
+    <view class="title">个人信息</view>
+    <view class="meta">身份：{{user.role || 'student'}}</view>
+    <view class="meta">当前生效身份：{{activeRoleText}}</view>
+    <view class="meta">手机号：{{user.phone || '未绑定'}}</view>
+    <view class="meta">昵称：{{user.nickName || '未设置'}}</view>
+    <view class="meta">OpenID：{{user.openid || '-'}}</view>
+  </view>
+
+  <view class="card" wx:if="{{activeRole==='student' && !needPhoneAuth}}">
+    <view class="title">申请成为老师</view>
+    <view class="desc">先以学生身份使用，提交申请后由管理员审批。</view>
+    <textarea class="mt-12" placeholder="申请理由（选填）" value="{{applyReason}}" bindinput="onReasonInput" />
+    <button class="btn-primary" bindtap="submitTeacherApplication">提交老师申请</button>
+    <view class="meta" wx:if="{{myTeacherApplication}}">当前状态：{{myTeacherApplication.status}}</view>
+  </view>
+
+  <view class="card" wx:if="{{activeRole==='admin'}}">
+    <view class="title">老师申请审批</view>
+    <view class="desc" wx:if="{{!pendingTeacherApplications.length}}">暂无待审批申请</view>
+    <view wx:for="{{pendingTeacherApplications}}" wx:key="_id" class="list-item">
+      <view>申请人：{{item.applicantOpenid}}</view>
+      <view class="meta">手机号：{{item.applicantPhone || '-'}}</view>
+      <view class="meta">理由：{{item.reason || '无'}}</view>
+      <view class="meta">时间：{{item.createdAt}}</view>
+      <view class="row mt-12">
+        <button size="mini" class="btn-primary" data-id="{{item._id}}" data-pass="{{true}}" bindtap="reviewTeacherApplication">通过</button>
+        <button size="mini" data-id="{{item._id}}" data-pass="{{false}}" bindtap="reviewTeacherApplication">拒绝</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="card card-pressable" bindtap="go" data-url="/pages/trip/trip">
+    <view class="sub-title">行程收集</view>
+    <view class="desc">填写参课、房间预订和到达交通信息</view>
+  </view>
+  <view class="card card-pressable" bindtap="go" data-url="/pages/materials/materials">
+    <view class="sub-title">资料存档</view>
+    <view class="desc">上传课程 Word 文档并自动归档</view>
+  </view>
+  <view class="card card-pressable" bindtap="go" data-url="/pages/credits/credits">
+    <view class="sub-title">积分/学分查询</view>
+    <view class="desc">查看累计积分与学分</view>
+  </view>
+  <view class="card card-pressable" bindtap="go" data-url="/pages/attendance/attendance">
+    <view class="sub-title">个人考勤</view>
+    <view class="desc">查看自己的签到与出勤记录</view>
+  </view>
+  <view class="card card-pressable" wx:if="{{isTeacher}}" bindtap="go" data-url="/pages/teacher/teacher">
+    <view class="sub-title">教师管理后台</view>
+    <view class="desc">课程内容、作业发布与批改、签到总览</view>
+  </view>
+</view>

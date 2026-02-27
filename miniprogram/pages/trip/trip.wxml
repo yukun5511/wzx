@@ -1,0 +1,33 @@
+<view class="container">
+  <view class="card">
+    <view class="row">
+      <view class="label">参与课程</view>
+      <switch checked="{{form.participate}}" bindchange="onParticipateChange" />
+    </view>
+    <view class="row">
+      <view class="label">房间数量</view>
+      <input class="value" type="number" value="{{form.roomCount}}" bindinput="onInput" data-key="roomCount" placeholder="请输入房间数量" />
+    </view>
+    <view class="row">
+      <view class="label">房型</view>
+      <picker mode="selector" range="{{roomTypes}}" value="{{roomTypeIndex}}" bindchange="onRoomTypeChange">
+        <view class="value">{{form.roomType || '请选择房型'}}</view>
+      </picker>
+    </view>
+    <view class="row">
+      <view class="label">到达时间</view>
+      <input class="value" value="{{form.arrivalTime}}" bindinput="onInput" data-key="arrivalTime" placeholder="如 2026-03-01 18:30" />
+    </view>
+    <view class="row">
+      <view class="label">交通工具</view>
+      <picker mode="selector" range="{{transports}}" value="{{transportIndex}}" bindchange="onTransportChange">
+        <view class="value">{{form.transportType || '请选择交通方式'}}</view>
+      </picker>
+    </view>
+    <view class="row">
+      <view class="label">车次/航班</view>
+      <input class="value" value="{{form.transportNo}}" bindinput="onInput" data-key="transportNo" placeholder="请输入车次或航班" />
+    </view>
+    <button class="btn-primary" bindtap="submit">保存行程</button>
+  </view>
+</view>

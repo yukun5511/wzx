@@ -1,0 +1,31 @@
+<view class="container">
+  <view class="auth-mask" wx:if="{{showPhoneAuthPopup}}">
+    <view class="auth-dialog">
+      <view class="auth-head">
+        <view class="auth-title">绑定手机号</view>
+        <view class="auth-subtitle">首次进入必须完成绑定，系统将据此识别角色权限</view>
+      </view>
+      <view class="auth-body">
+        <view class="auth-label">手机号</view>
+        <input class="auth-input" type="number" maxlength="11" placeholder="请输入11位手机号" value="{{manualPhone}}" bindinput="onManualPhoneInput" />
+        <view class="auth-error" wx:if="{{bindError}}">{{bindError}}</view>
+      </view>
+      <view class="auth-foot">
+        <button class="btn-primary auth-btn" loading="{{binding}}" disabled="{{binding}}" bindtap="onManualBindPhone">绑定手机号并进入</button>
+        <view class="auth-tip" bindtap="onCloseAuthPopup">未绑定手机号将无法使用系统</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="hero">
+    <view class="hero-title">课程管理助手</view>
+    <view class="hero-desc">面向学生与教师的课程信息、签到、作业与积分一体化管理</view>
+    <view class="meta" wx:if="{{showPhoneAuthPopup}}" style="color:#e8f0ff; margin-top:10rpx;">请先完成手机号绑定以识别角色权限</view>
+  </view>
+
+  <view class="card card-pressable" wx:for="{{menus}}" wx:key="path" bindtap="go" data-path="{{item.path}}">
+    <view class="tag">快捷入口</view>
+    <view class="sub-title">{{item.title}}</view>
+    <view class="desc">{{item.desc}}</view>
+  </view>
+</view>

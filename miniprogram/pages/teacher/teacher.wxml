@@ -1,0 +1,44 @@
+<view class="container">
+  <view wx:if="{{!isTeacher}}" class="card">仅教师/管理员可访问</view>
+
+  <block wx:if="{{isTeacher}}">
+    <view class="card">
+      <view class="title">课程内容管理</view>
+      <textarea placeholder="课程安排" value="{{courseForm.schedule}}" bindinput="onCourseInput" data-key="schedule" />
+      <textarea placeholder="规则说明" value="{{courseForm.rules}}" bindinput="onCourseInput" data-key="rules" class="mt-12" />
+      <textarea placeholder="温馨提示" value="{{courseForm.tips}}" bindinput="onCourseInput" data-key="tips" class="mt-12" />
+      <button class="btn-primary" bindtap="saveCourseInfo">保存课程内容</button>
+    </view>
+
+    <view class="card">
+      <view class="title">发布作业</view>
+      <input placeholder="作业标题" value="{{publish.title}}" bindinput="onPublishInput" data-key="title" />
+      <textarea placeholder="作业内容" value="{{publish.content}}" bindinput="onPublishInput" data-key="content" class="mt-12" />
+      <input placeholder="截止时间，如 2026-03-20" value="{{publish.deadline}}" bindinput="onPublishInput" data-key="deadline" class="mt-12" />
+      <button class="btn-primary" bindtap="publishAssignment">发布</button>
+    </view>
+
+    <view class="card">
+      <view class="title">作业批改</view>
+      <view wx:if="{{!submissions.length}}">暂无待批改记录</view>
+      <view wx:for="{{submissions}}" wx:key="_id" class="list-item">
+        <view>作业：{{item.assignmentTitle}}</view>
+        <view class="meta">学生：{{item.studentOpenid}}</view>
+        <view class="meta">文件：{{item.fileName}}</view>
+        <input type="number" placeholder="分数" value="{{item.tempScore}}" bindinput="onGradeInput" data-index="{{index}}" data-key="tempScore" />
+        <input class="mt-12" placeholder="评语" value="{{item.tempComment}}" bindinput="onGradeInput" data-index="{{index}}" data-key="tempComment" />
+        <button size="mini" bindtap="grade" data-id="{{item._id}}" data-index="{{index}}">提交批改</button>
+      </view>
+    </view>
+
+    <view class="card" wx:if="{{isAdmin}}">
+      <view class="title">签到记录</view>
+      <view wx:if="{{!attendanceList.length}}">暂无签到记录</view>
+      <view wx:for="{{attendanceList}}" wx:key="_id" class="list-item">
+        <view>学生：{{item.openid}}</view>
+        <view class="meta">方式：{{item.method}}</view>
+        <view class="meta">时间：{{item.createdAt}}</view>
+      </view>
+    </view>
+  </block>
+</view>
